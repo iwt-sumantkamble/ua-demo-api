@@ -1,0 +1,7 @@
+HTTP_METHOD = 'httpMethod'
+UA_DEMO = 'ua-demo'
+GET = 'GET'
+PATH_PARAMETERS = 'pathParameters'
+ID = 'Id'
+PARAM_ITEM = 'item'
+ITEM = 'Item'
