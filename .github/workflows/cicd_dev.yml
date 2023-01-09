@@ -1,10 +1,11 @@
 name: CI/CD - DEV
 
-on: push
+on: workflow_dispatch
 
 jobs:
   cicd_dev:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v3
