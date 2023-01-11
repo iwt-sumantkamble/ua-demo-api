@@ -27,8 +27,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: cdk diff -c 'stage=dev'
-        uses: youyo/aws-cdk-github-actions@v2
+      - name: Deploy
+        uses: iwt-sonic/aws-cdk-github-actions@master
         with:
-          cdk_subcommand: 'diff'
-          actions_comment: true
+          cdk_subcommand: 'deploy'
+          cdk_stack: 'ua-demo-api'
+          cdk_args: '-c stage=dev --require-approval never'
+          actions_comment: false
+          cdk_version: '2.59.0'
