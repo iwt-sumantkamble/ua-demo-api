@@ -1,0 +1,38 @@
+name: CI/CD - LIVE
+
+on: workflow_dispatch
+
+jobs:
+  aws_cdk:
+    runs-on: ubuntu-latest
+    environment: live
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install Requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Deploy
+        uses: iwt-sonic/aws-cdk-github-actions@master
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_stack: 'ua-demo-api'
+          cdk_args: '-c stage=dev --require-approval never'
+          actions_comment: false
+          cdk_version: '2.59.0'
