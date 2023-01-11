@@ -33,6 +33,6 @@ jobs:
         with:
           cdk_subcommand: 'deploy'
           cdk_stack: 'ua-demo-api'
-          cdk_args: '-c stage=dev --require-approval never'
+          cdk_args: '-c stage=live --require-approval never'
           actions_comment: false
           cdk_version: '2.59.0'
