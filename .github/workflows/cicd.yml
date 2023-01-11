@@ -14,6 +14,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Deploy
         uses: iwt-sonic/aws-cdk-github-actions@master
         with:
@@ -22,6 +23,7 @@ jobs:
           cdk_args: '-c stage=dev --require-approval never'
           actions_comment: false
           cdk_version: '2.59.0'
+
   LIVE:
     runs-on: ubuntu-latest
     environment: live
@@ -34,6 +36,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Deploy
         uses: iwt-sonic/aws-cdk-github-actions@master
         with:

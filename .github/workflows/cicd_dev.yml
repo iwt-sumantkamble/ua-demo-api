@@ -23,15 +23,3 @@ jobs:
           cdk_args: '-c stage=dev --require-approval never'
           actions_comment: false
           cdk_version: '2.59.0'
-
-      - name: Slack Notification
-        uses: iwt-sonic/action-slack-notify@master
-        env:
-          SLACK_CHANNEL: ua-test
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: https://github.com/iwt-sonic.png?size=48
-          SLACK_USERNAME: iwt-sonic
-          SLACK_MESSAGE: '<https://ua-demo-api.umzugsauktion.de> :fast:'
-          SLACK_FOOTER: '<https://github.com/iwt-sonic | Sonic Slack Actions>'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          MSG_MINIMAL: actions url,commit
