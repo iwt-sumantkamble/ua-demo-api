@@ -2,11 +2,41 @@
 package-lock.json
 __pycache__
 .pytest_cache
-.venv
 *.egg-info
 
 # CDK asset staging directory
 .cdk.staging
 cdk.out
 
-.vscode
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+source/.env
+source/venv
+source/.venv
+
+# CDK Context & Staging files
+.cdk.staging/
+cdk.out/
+*.zip
+
+.DS_Store
+
+*.idea/*
+.idea
+/cdk.context.json
+
+.coverage
+coverage.xml
+
+.package
