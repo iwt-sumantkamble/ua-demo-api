@@ -6,10 +6,10 @@ on:
       environment:
         type: environment
         required: true
-        description: Select environment
+        description: Environment
 
 jobs:
-  aws_cdk:
+  cdk-deploy:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     env:
@@ -20,7 +20,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Deploy
         uses: iwt-sonic/aws-cdk-github-actions@master
         with:
@@ -28,15 +27,3 @@ jobs:
           cdk_stack: 'ua-demo-api'
           cdk_args: '-c stage=${{ inputs.environment }} --require-approval never'
           actions_comment: false
-
-      - name: Slack Notification
-        uses: iwt-sonic/action-slack-notify@master
-        env:
-          SLACK_CHANNEL: ua-test
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: https://github.com/iwt-sonic.png?size=48
-          SLACK_USERNAME: iwt-sonic
-          SLACK_MESSAGE: '<https://ua-demo-api.umzugsauktion.de> :fast:'
-          SLACK_FOOTER: '<https://github.com/iwt-sonic | Sonic Slack Actions>'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          MSG_MINIMAL: actions url,commit
