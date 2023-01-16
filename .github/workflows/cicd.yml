@@ -1,11 +1,17 @@
-name: CI/CD - ALL
+name: CI/CD
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+        description: Environment
 
 jobs:
-  DEV:
+  cdk-deploy:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{ inputs.environment }}
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -14,34 +20,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Deploy
+      - name: Deploy to ${{ inputs.environment }}
         uses: iwt-sonic/aws-cdk-github-actions@master
         with:
           cdk_subcommand: 'deploy'
           cdk_stack: 'ua-demo-api'
-          cdk_args: '-c stage=dev --require-approval never'
+          cdk_args: '-c stage=${{ inputs.environment }} --require-approval never'
           actions_comment: false
-          cdk_version: '2.59.0'
-
-  LIVE:
-    runs-on: ubuntu-latest
-    environment: live
-    needs: DEV
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Deploy
-        uses: iwt-sonic/aws-cdk-github-actions@master
-        with:
-          cdk_subcommand: 'deploy'
-          cdk_stack: 'ua-demo-api'
-          cdk_args: '-c stage=live --require-approval never'
-          actions_comment: false
-          cdk_version: '2.59.0'
+      - name: Slack Notification
+        uses: iwt-sonic/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: team-sonic-ci-cd
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://github.com/iwt-sonic.png?size=48
+          SLACK_USERNAME: iwt-sonic
+          SLACK_MESSAGE: 'Umzugsauktion Backoffice> :fast:'
+          SLACK_FOOTER: '<https://github.com/iwt-sonic|Sonic Slack Actions>'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          MSG_MINIMAL: actions url,commit
