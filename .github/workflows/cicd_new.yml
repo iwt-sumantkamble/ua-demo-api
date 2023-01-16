@@ -21,6 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Deploy
+        run: echo I am deploying to ${{ inputs.environment }}!
         uses: iwt-sonic/aws-cdk-github-actions@master
         with:
           cdk_subcommand: 'deploy'
