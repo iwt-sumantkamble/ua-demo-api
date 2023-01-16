@@ -34,7 +34,7 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_ICON: https://github.com/iwt-sonic.png?size=48
           SLACK_USERNAME: iwt-sonic
-          SLACK_MESSAGE: 'Umzugsauktion Backoffice> :fast:'
+          SLACK_MESSAGE: 'Umzugsauktion Demo API :fast:'
           SLACK_FOOTER: '<https://github.com/iwt-sonic|Sonic Slack Actions>'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           MSG_MINIMAL: actions url,commit
