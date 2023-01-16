@@ -20,9 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Deploy to ${{ inputs.environment }}!
-        run: echo I am deploying to ${{ inputs.environment }}!
-      - name: Deploy
+      - name: Deploy to ${{ inputs.environment }}
+        url: 'http://www.myapp.com'
         uses: iwt-sonic/aws-cdk-github-actions@master
         with:
           cdk_subcommand: 'deploy'
